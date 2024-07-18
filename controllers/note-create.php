@@ -1,9 +1,6 @@
 <?php
 
-//two layers of validation
-//the client site or browser validation
-//the server validation that cannot be bypass by any user 
-//also giving the user feedback on what the error is 
+require 'Validator.php';
 
 $config = require('config.php');
   
@@ -21,12 +18,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   $errors = [];
 
-  if (strlen($_POST['body']) === 0) {
+
+  $validator = new Validator();
+
+
+  if ($validator->string($_POST['body'])){
 
     $errors['body'] = 'A body is required';
   }
 
-//this validate the maximum Nos. of char and also not loose the typed data
 
   if (strlen($_POST['body']) > 1000) {
 
